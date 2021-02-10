@@ -52,4 +52,11 @@ public class POST_GET {
 
 
     }
+    @Test
+    public void createNewPlaceWithPojo(){
+        RestAssured.baseURI="https://rahulshettyacademy.com";
+        given().log().all().body(RahulPayloads.addNewPlacePayload2()).queryParam("key","qaclick123")
+                .when().post("/maps/api/place/add/json")
+                .then().log().all().statusCode(200);
+    }
 }
