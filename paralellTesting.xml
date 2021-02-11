@@ -3,19 +3,19 @@
 <suite name="API Paralel Testing" parallel="tests" thread-count="3">
     <test name="GoRest Api">
         <classes>
-            <class name="examples.GoRestAPITest"/>
+            <class name="tests.GoRestAPITest"/>
         </classes>
     </test> <!-- Test -->
 
     <test name="RahulShetty Api">
         <classes>
-            <class name="examples.POST_GETTest"/>
+            <class name="tests.POST_GETTest"/>
         </classes>
 
     </test> <!-- Test -->
     <test name="GoRest Api2">
         <classes>
-            <class name="examples.GoRestAPIDataProviderTest"/>
+            <class name="tests.GoRestAPIDataProviderTest"/>
         </classes>
 
     </test> <!-- Test -->
