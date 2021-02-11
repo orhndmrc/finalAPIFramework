@@ -15,7 +15,7 @@ import util.TestUtil;
 
 import static io.restassured.RestAssured.given;
 
-public class GoRestRequestAndResponseSpecifications extends TestUtil {
+public class GoRestRequestAndResponseSpecificationsTest extends TestUtil {
     @Test
     public void getSingleUser() {
         createRequest().queryParam("id",2267);

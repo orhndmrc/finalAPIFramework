@@ -10,7 +10,7 @@ import payloads.GoRestPayloads;
 
 import static io.restassured.RestAssured.given;
 
-public class GoRestAPI {
+public class GoRestAPITest {
     @Test
     public void getUsers(){
         //BDD approach
