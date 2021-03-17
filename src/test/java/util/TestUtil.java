@@ -2,12 +2,12 @@ package util;
 
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.builder.ResponseSpecBuilder;
-import io.restassured.config.Config;
 import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
+import payloads.JiraPayloads;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
@@ -16,27 +16,31 @@ public class TestUtil {
     RequestSpecification request;
     Response response;
     ResponseSpecification resspec;
-    //The common methods are in order whic means use the methods the same order in test classes
+    //The common methods are in order which means we use the methods the same order in test classes
 
     /**
-     * This method is for GoRestAPI
+     * This method helps us create the authorization token
      * @return
      */
-    public RequestSpecification createRequest(){
-        //RequestSpecification designates how the request looks like
-         request = given().log().all().spec(new RequestSpecBuilder().setBaseUri(ConfigReader.getProperty("baseURI"))
-                .addHeader("Accept","application/json").addHeader("Authorization", ConfigReader.getProperty("token"))
-                .setContentType(ContentType.JSON).build());
-        return request;
+    public String getAuthorizationKey(){
+        Response response = given().log().all().body(JiraPayloads.tokenPayload())
+                .header("Content-Type","application/json")
+                .when().post(ConfigReader.getProperty("baseURI")+ConfigReader.getProperty("authPath"))
+                .then().log().all().statusCode(200).extract().response();
+        String sessionID = getJsonPath(response).getString("session.name");
+        String sessionKey = getJsonPath(response).getString("session.value");
+        return sessionID+"="+sessionKey;
+
     }
+
     /**
-     * This method is for RahulAPI
+     * This method is for JiraAPI.RequestSpecification designates how the request looks like
+     * @param
      * @return
      */
-    public RequestSpecification createRequestRahul(){
-        //RequestSpecification designates how the request looks like
-        request = given().log().all().spec(new RequestSpecBuilder().setBaseUri(ConfigReader.getProperty("baseURIRahul"))
-                .addQueryParam("key",ConfigReader.getProperty("keyRahul"))
+    public RequestSpecification createRequest(String token){
+         request = given().log().all().spec(new RequestSpecBuilder().setBaseUri(ConfigReader.getProperty("baseURI"))
+                .addHeader("Cookie", token)
                 .setContentType(ContentType.JSON).build());
         return request;
     }
@@ -74,6 +78,7 @@ public class TestUtil {
     public Response getResponse(){
         return response.then().log().all().spec(resspec).extract().response();
     }
+
     public Response getResponseHamcrest(String key, String value){
         return response.then().log().all().spec(resspec).body(key,equalTo(value)).extract().response();
     }

@@ -1,22 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="API Paralel Testing" parallel="tests" thread-count="3">
-    <test name="GoRest Api">
+<suite name="Jira API Testing" parallel="tests" thread-count="3">
+    <test name="Create Bug">
         <classes>
-            <class name="tests.GoRestAPITest"/>
+            <class name="tests.CreateBugJira"/>
         </classes>
     </test> <!-- Test -->
 
-    <test name="RahulShetty Api">
+    <test name="Get Bug">
         <classes>
-            <class name="tests.POST_GETTest"/>
+            <class name="tests.GetBugOnJira"/>
         </classes>
 
     </test> <!-- Test -->
-    <test name="GoRest Api2">
+    <test name="Delete Bug">
         <classes>
-            <class name="tests.GoRestAPIDataProviderTest"/>
+            <class name="tests.DeleteBugOnJira"/>
         </classes>
 
     </test> <!-- Test -->
+    <test name="Post-Get-Delete Bug">
+        <classes>
+            <class name="tests.PostGetDeleteBugOnJira"/>
+        </classes>
+
+    </test> <!-- Test -->
+
 </suite> <!-- Suite -->
